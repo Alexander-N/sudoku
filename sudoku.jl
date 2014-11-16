@@ -154,13 +154,13 @@ end
 function df_search(poss_values)
     ## Using depth-first search and propagation, try all possible values.
     if poss_values == false 
-        return false ## Failed earlier
+        return false # Failed earlier
     end
     if all(s->length(poss_values[s]) == 1, squares)
-        return poss_values ## Solved!
+        return poss_values # Solved!
     end
 
-    ## Chose the unfilled square s with the fewest possibilities
+    # Chose the unfilled square s with the fewest possibilities
     n,s = find_fewest(poss_values)        
     for d in poss_values[s]
         pv = df_search(assign(copy(poss_values), s, d))
@@ -203,7 +203,7 @@ function solve_all(grids, name="", showif=0.0)
         tic()
         poss_values = solve(grid)
         t = toq() 
-        ## Display puzzles that take long enough
+        # Display puzzles that take long enough
         if (showif != None) && (t > showif)
             display(grid_values(grid))
             poss_values && display(values)
@@ -221,7 +221,7 @@ function solve_all(grids, name="", showif=0.0)
 end
 
 function solved(poss_values)
-    ## A puzzle is solved if each unit is a permutation of the digits 1 to 9.
+    # A puzzle is solved if each unit is a permutation of the digits 1 to 9.
     unitsolved(unit) = Set([poss_values[s] for s in unit]) == Set([string(d) for d in digits])
     return (poss_values != false) && all(unit->unitsolved(unit), unitlist)
 end
@@ -238,7 +238,7 @@ function random_puzzle(N=17)
             return join([(length(poss_values[s])==1) ? poss_values[s] : '.' for s in squares])
         end
     end
-    return random_puzzle(N) ## Give up and make a new puzzle
+    return random_puzzle(N) # Give up and make a new puzzle
 end
  
 grid1  = "003020600900305001001806400008102900700000008006708200002609500800203009005010300"
