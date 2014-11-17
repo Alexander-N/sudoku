@@ -151,6 +151,7 @@ function find_fewest(poss_values::Dict)
     return min_poss, sel_square
 end
 
+
 function df_search(poss_values)
     ## Using depth-first search and propagation, try all possible values.
     if poss_values == false 
@@ -173,12 +174,6 @@ end
 
 ################## Utilities ################
 
-
-
-
-
-
-
 function from_file(filename::String, sep="\n")
     ## Parse a file into a list of strings, separated by sep.
     f = open(filename,"r")
@@ -186,14 +181,8 @@ function from_file(filename::String, sep="\n")
     close(f)
     return split(strip(fstring), sep)
 end
-        
-
 
 ################ System test ################
-
-
-
-
 
 function solve_all(grids, name="", showif=0.0)
     ## Attempt to solve a sequence of grids. Report results.
@@ -211,7 +200,6 @@ function solve_all(grids, name="", showif=0.0)
         end
         return (t, solved(poss_values))
     end
-
     arr = [tup[idx] for tup in [time_solve(grid) for grid in grids], idx in [1,2]]       
     times, results = arr[:,1], arr[:,2]
     N = length(grids)
@@ -220,11 +208,13 @@ function solve_all(grids, name="", showif=0.0)
     end
 end
 
+
 function solved(poss_values)
     # A puzzle is solved if each unit is a permutation of the digits 1 to 9.
     unitsolved(unit) = Set([poss_values[s] for s in unit]) == Set([string(d) for d in digits])
     return (poss_values != false) && all(unit->unitsolved(unit), unitlist)
 end
+ 
  
 function random_puzzle(N=17)
     ## Make a random puzzle with N or more assignments. Restart on contradictions.
@@ -245,7 +235,6 @@ grid1  = "0030206009003050010018064000081029007000000080067082000026095008002030
 grid2  = "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......"
 hard1  = ".....6....59.....82....8....45........3........6..3.54...325..6.................."
 rand1 = "..7.2....3...........9......4...2...8.......1.....6......1.74...2.8.9...5..2....."    
-
 
 test()
 solve_all(from_file("easy50.txt", "========"), "easy", None)
